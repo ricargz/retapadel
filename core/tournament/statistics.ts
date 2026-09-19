@@ -14,7 +14,14 @@ function createEmptyStats(playerId: string): PlayerStats {
   };
 }
 
-function applyTeamStats(stats: Map<string, PlayerStats>, ids: [string, string], scoreFor: number, scoreAgainst: number, won: boolean, pointsForWin: number) {
+function applyTeamStats(
+  stats: Map<string, PlayerStats>,
+  ids: [string, string],
+  scoreFor: number,
+  scoreAgainst: number,
+  result: "win" | "loss" | "draw",
+  pointsForWin: number,
+) {
   for (const playerId of ids) {
     const row = stats.get(playerId);
     if (!row) continue;
@@ -23,10 +30,10 @@ function applyTeamStats(stats: Map<string, PlayerStats>, ids: [string, string], 
     row.scoreFor += scoreFor;
     row.scoreAgainst += scoreAgainst;
     row.difference = row.scoreFor - row.scoreAgainst;
-    if (won) {
+    if (result === "win") {
       row.won += 1;
       row.points += pointsForWin;
-    } else {
+    } else if (result === "loss") {
       row.lost += 1;
     }
   }
@@ -44,8 +51,8 @@ export function calculatePlayerStats(players: Player[], rounds: Round[], pointsF
     for (const match of round.matches) {
       if (!isCompletedMatch(match)) continue;
 
-      applyTeamStats(stats, match.teamA, match.scoreA, match.scoreB, match.winner === "A", pointsForWin);
-      applyTeamStats(stats, match.teamB, match.scoreB, match.scoreA, match.winner === "B", pointsForWin);
+      applyTeamStats(stats, match.teamA, match.scoreA, match.scoreB, match.winner === "A" ? "win" : match.winner === "B" ? "loss" : "draw", pointsForWin);
+      applyTeamStats(stats, match.teamB, match.scoreB, match.scoreA, match.winner === "B" ? "win" : match.winner === "A" ? "loss" : "draw", pointsForWin);
     }
   }
 
@@ -88,6 +95,6 @@ export function getTournamentTotals(rounds: Round[]) {
   };
 }
 
-export function isCompletedMatch(match: Match): match is Match & { scoreA: number; scoreB: number; winner: "A" | "B" } {
+export function isCompletedMatch(match: Match): match is Match & { scoreA: number; scoreB: number; winner: "A" | "B" | "draw" } {
   return match.status === "completed" && typeof match.scoreA === "number" && typeof match.scoreB === "number" && match.winner !== undefined;
 }

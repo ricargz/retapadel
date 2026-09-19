@@ -121,7 +121,7 @@ function ScoreCorrectionDialog({
           <Button type="button" variant="secondary" onClick={onClose}>
             Cancelar
           </Button>
-          <Button type="button" disabled={scoreA === scoreB} onClick={() => onSave(scoreA, scoreB)}>
+          <Button type="button" onClick={() => onSave(scoreA, scoreB)}>
             Guardar
           </Button>
         </DialogFooter>

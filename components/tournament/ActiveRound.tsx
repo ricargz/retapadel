@@ -9,7 +9,6 @@ import { RestingPlayers } from "@/components/padel/RestingPlayers";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -18,6 +17,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { HoldToConfirmButton } from "@/components/ui/hold-to-confirm-button";
 
 interface ActiveRoundProps {
   tournament: Tournament;
@@ -35,7 +35,7 @@ export function ActiveRound({ tournament, onSubmitScore, onNextRound, onFinish }
   const allCompleted = round.matches.every((match) => match.status === "completed");
 
   return (
-    <div className={`space-y-4 ${allCompleted && tournament.status === "active" ? "pb-28" : "pb-4"}`}>
+    <div className={`space-y-4 ${allCompleted && tournament.status === "active" ? "pb-40" : "pb-4"}`}>
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
         <RestingPlayers players={restingPlayers} stats={stats} />
       </motion.div>
@@ -52,16 +52,22 @@ export function ActiveRound({ tournament, onSubmitScore, onNextRound, onFinish }
             exit={{ opacity: 0, y: 18 }}
             className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-background/94 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur"
           >
-            <div className="mx-auto grid max-w-5xl grid-cols-[1fr_56px] gap-2 sm:grid-cols-[1fr_auto]">
+            <div className="mx-auto grid max-w-5xl gap-2 sm:grid-cols-[1fr_220px]">
               <Button type="button" size="lg" className="h-14 w-full animate-[soft-pop_420ms_ease-out] text-base font-black shadow-xl shadow-primary/20" onClick={onNextRound}>
                 Generar siguiente ronda
                 <ArrowRight className="h-5 w-5" aria-hidden="true" />
               </Button>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button type="button" size="icon" variant="secondary" aria-label="Finalizar torneo" className="h-14 w-14 sm:w-auto sm:px-4">
+                  <Button
+                    type="button"
+                    size="lg"
+                    variant="secondary"
+                    aria-label="Finalizar torneo"
+                    className="h-14 w-full border-primary/35 bg-primary/10 text-base font-black text-primary shadow-sm hover:bg-primary/15"
+                  >
                     <Flag className="h-5 w-5" aria-hidden="true" />
-                    <span className="hidden sm:inline">Finalizar torneo</span>
+                    Finalizar torneo
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
@@ -75,11 +81,13 @@ export function ActiveRound({ tournament, onSubmitScore, onNextRound, onFinish }
                         Cancelar
                       </Button>
                     </AlertDialogCancel>
-                    <AlertDialogAction asChild>
-                      <Button type="button" onClick={onFinish}>
-                        Finalizar
-                      </Button>
-                    </AlertDialogAction>
+                    <HoldToConfirmButton
+                      idleText="Mantén presionado para finalizar"
+                      holdingText="Suelta para cancelar"
+                      completeText="Finalizando"
+                      variant="default"
+                      onConfirm={onFinish}
+                    />
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>

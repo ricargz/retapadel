@@ -11,7 +11,7 @@ export function completeMatch(match: Match, scoreA: number, scoreB: number): Mat
     ...match,
     scoreA,
     scoreB,
-    winner: scoreA > scoreB ? "A" : "B",
+    winner: scoreA === scoreB ? "draw" : scoreA > scoreB ? "A" : "B",
     status: "completed",
   };
 }

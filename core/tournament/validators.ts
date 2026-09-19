@@ -67,7 +67,5 @@ export function validateScore(scoreA: number, scoreB: number) {
 
   if (!a.success) return a.error.issues[0]?.message ?? "Revisa el marcador A.";
   if (!b.success) return b.error.issues[0]?.message ?? "Revisa el marcador B.";
-  if (scoreA === scoreB) return "No se puede cerrar un partido empatado.";
-
   return null;
 }

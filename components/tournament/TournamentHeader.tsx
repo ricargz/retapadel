@@ -9,7 +9,6 @@ import { Badge } from "@/components/ui/badge";
 import { ThemeSelector } from "@/components/theme/ThemeSelector";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -18,6 +17,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { HoldToConfirmButton } from "@/components/ui/hold-to-confirm-button";
 
 interface TournamentHeaderProps {
   tournament: Tournament;
@@ -81,11 +81,7 @@ export function TournamentHeader({ tournament, onDelete }: TournamentHeaderProps
                     Cancelar
                   </Button>
                 </AlertDialogCancel>
-                <AlertDialogAction asChild>
-                  <Button type="button" variant="destructive" onClick={onDelete}>
-                    Eliminar
-                  </Button>
-                </AlertDialogAction>
+                <HoldToConfirmButton idleText="Mantén presionado para eliminar" holdingText="Suelta para cancelar" completeText="Eliminando" onConfirm={onDelete} />
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>

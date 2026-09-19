@@ -35,7 +35,7 @@ export interface Match {
   teamB: [string, string];
   scoreA?: number;
   scoreB?: number;
-  winner?: "A" | "B";
+  winner?: "A" | "B" | "draw";
   status: "pending" | "completed";
 }
 

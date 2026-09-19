@@ -65,7 +65,7 @@ export function MatchCourtCard({ tournament, roundId, match, onSubmitScore }: Ma
       <Button
         type="button"
         className="mt-3 h-12 w-full text-base font-black shadow-sm transition-transform active:scale-[0.99]"
-        disabled={saving || scoreA === scoreB}
+        disabled={saving}
         onClick={submit}
       >
         {completed ? "Guardar correccion" : "Finalizar partido"}

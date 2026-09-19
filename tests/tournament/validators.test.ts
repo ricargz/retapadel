@@ -16,8 +16,8 @@ describe("tournament validators", () => {
     expect(validateTournamentConfig(8, 2)).toBeNull();
   });
 
-  it("rejects ties and negative scores", () => {
-    expect(validateScore(4, 4)).toContain("empatado");
+  it("accepts ties and rejects negative scores", () => {
+    expect(validateScore(4, 4)).toBeNull();
     expect(validateScore(-1, 4)).toContain("negativo");
     expect(validateScore(6, 4)).toBeNull();
   });

@@ -68,6 +68,11 @@ summary::-webkit-details-marker {
   background: rgb(var(--ball) / 0.45);
 }
 
+#next-logo,
+[aria-label="Open Next.js Dev Tools"] {
+  display: none !important;
+}
+
 @keyframes padel-bounce {
   0%,
   100% {

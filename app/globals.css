@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 244 245 242;
+  --surface: 255 255 255;
+  --surface-muted: 233 236 234;
+  --text-primary: 24 32 30;
+  --text-secondary: 104 113 109;
+  --border: 214 220 218;
+  --court: 49 89 167;
+  --court-dark: 40 73 133;
+  --court-line: 245 247 250;
+  --primary: 36 76 143;
+  --primary-contrast: 255 255 255;
+  --ball: 198 201 108;
+  --success: 71 116 95;
+  --error: 184 74 74;
+}
+
+.dark {
+  --background: 18 21 20;
+  --surface: 27 31 30;
+  --surface-muted: 37 42 40;
+  --text-primary: 241 243 241;
+  --text-secondary: 168 176 172;
+  --border: 52 58 55;
+  --court: 183 71 71;
+  --court-dark: 143 55 55;
+  --court-line: 243 237 237;
+  --primary: 192 90 85;
+  --primary-contrast: 255 255 255;
+  --ball: 185 188 104;
+  --success: 109 154 130;
+  --error: 210 106 100;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: rgb(var(--background));
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background:
+    linear-gradient(180deg, rgb(var(--surface-muted) / 0.62), transparent 340px),
+    rgb(var(--background));
+  color: rgb(var(--text-primary));
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+::selection {
+  background: rgb(var(--ball) / 0.45);
+}
+
+@keyframes padel-bounce {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(16deg);
+  }
+}
+
+@keyframes court-sweep {
+  0%,
+  42%,
+  100% {
+    transform: translateX(0) rotate(12deg);
+    opacity: 0;
+  }
+  58% {
+    transform: translateX(420%) rotate(12deg);
+    opacity: 1;
+  }
+}
+
+@keyframes soft-pop {
+  0% {
+    transform: scale(0.98);
+  }
+  55% {
+    transform: scale(1.015);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes court-float {
+  0%,
+  100% {
+    transform: translateY(0) rotateX(0deg);
+  }
+  50% {
+    transform: translateY(-7px) rotateX(2deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

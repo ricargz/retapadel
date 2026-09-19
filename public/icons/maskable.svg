@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Retapadel">
+  <rect width="512" height="512" fill="#244C8F"/>
+  <rect x="86" y="114" width="340" height="252" rx="20" fill="#3159A7"/>
+  <path d="M256 114v252M86 240h340M152 114v252M360 114v252" stroke="#F5F7FA" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="360" cy="386" r="44" fill="#C6C96C"/>
+</svg>

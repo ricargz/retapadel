@@ -65,7 +65,7 @@ export async function generateTournamentPdf(tournament: Tournament) {
   state.y -= 104;
 
   ensureSpace(120 + standings.length * 28);
-  drawStandings(state.page, fonts, standings, tournament.config.pointsForWin, state.y);
+  drawStandings(state.page, fonts, standings, state.y);
   state.y -= 112 + standings.length * 28;
 
   ensureSpace(84);
@@ -130,7 +130,7 @@ function drawTotals(page: PDFPage, fonts: PdfFonts, totals: string[]) {
   });
 }
 
-function drawStandings(page: PDFPage, fonts: PdfFonts, standings: ReturnType<typeof calculateStandings>, pointsForWin: number, topY: number) {
+function drawStandings(page: PDFPage, fonts: PdfFonts, standings: ReturnType<typeof calculateStandings>, topY: number) {
   const headerHeight = 38;
   const rowHeight = 28;
   const tableHeight = headerHeight + 34 + standings.length * rowHeight;
@@ -139,7 +139,7 @@ function drawStandings(page: PDFPage, fonts: PdfFonts, standings: ReturnType<typ
 
   drawCard(page, x, y, contentWidth, tableHeight);
   drawText(page, fonts.bold, "Clasificacion final", x + 14, topY - 24, 12, colors.text);
-  drawText(page, fonts.bold, `Victoria ${pointsForWin} pts`, x + contentWidth - 82, topY - 24, 9, colors.primary);
+  drawAlignedText(page, fonts.bold, "Puntos por marcador", x + contentWidth - 14, topY - 24, 9, colors.primary, "right");
   page.drawRectangle({ x, y: topY - 72, width: contentWidth, height: 34, color: colors.surfaceMuted });
 
   const columns = [

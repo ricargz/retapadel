@@ -17,7 +17,7 @@ export function LiveStandingsTable({ tournament, mode = "provisional" }: LiveSta
     <div className="overflow-hidden rounded-md border border-border bg-surface">
       <div className="flex items-center justify-between gap-3 border-b border-border p-3">
         <h2 className="text-sm font-bold text-text-primary">{mode === "final" ? "Clasificacion final" : "Clasificacion provisional"}</h2>
-        <Badge tone="primary">Victoria {tournament.config.pointsForWin} pts</Badge>
+        <Badge tone="primary">Puntos por marcador</Badge>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full min-w-[520px] border-collapse text-sm">

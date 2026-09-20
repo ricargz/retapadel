@@ -4,10 +4,10 @@ import { updateMatchScore } from "@/core/tournament/scoring";
 import { calculateStandings } from "@/core/tournament/statistics";
 
 describe("statistics", () => {
-  it("calculates points, differences and stable standings", () => {
+  it("assigns match score points to every player in each pair", () => {
     let tournament = createTournament(["Ana", "Bruno", "Carla", "Diego"], 1, "Tabla");
     const { round } = generateNextRound(tournament);
-    const completed = updateMatchScore(round, round.matches[0].id, 7, 5);
+    const completed = updateMatchScore(round, round.matches[0].id, 3, 1);
     tournament = { ...tournament, rounds: [completed] };
 
     const standings = calculateStandings(tournament.players, tournament.rounds, tournament.config.pointsForWin);
@@ -15,11 +15,11 @@ describe("statistics", () => {
     const losers = round.matches[0].teamB.map((id) => standings.find((row) => row.playerId === id));
 
     expect(winners.every((row) => row?.points === 3 && row.difference === 2)).toBe(true);
-    expect(losers.every((row) => row?.points === 0 && row.difference === -2)).toBe(true);
+    expect(losers.every((row) => row?.points === 1 && row.difference === -2)).toBe(true);
     expect(standings[0].points).toBe(3);
   });
 
-  it("counts tied matches without assigning a win or loss", () => {
+  it("counts tied matches without assigning a win or loss while preserving score points", () => {
     let tournament = createTournament(["Ana", "Bruno", "Carla", "Diego"], 1, "Tabla");
     const { round } = generateNextRound(tournament);
     const completed = updateMatchScore(round, round.matches[0].id, 4, 4);
@@ -28,6 +28,6 @@ describe("statistics", () => {
     const standings = calculateStandings(tournament.players, tournament.rounds, tournament.config.pointsForWin);
 
     expect(completed.matches[0].winner).toBe("draw");
-    expect(standings.every((row) => row.played === 1 && row.won === 0 && row.lost === 0 && row.points === 0 && row.difference === 0)).toBe(true);
+    expect(standings.every((row) => row.played === 1 && row.won === 0 && row.lost === 0 && row.points === 4 && row.difference === 0)).toBe(true);
   });
 });

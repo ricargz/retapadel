@@ -20,7 +20,6 @@ function applyTeamStats(
   scoreFor: number,
   scoreAgainst: number,
   result: "win" | "loss" | "draw",
-  pointsForWin: number,
 ) {
   for (const playerId of ids) {
     const row = stats.get(playerId);
@@ -30,16 +29,16 @@ function applyTeamStats(
     row.scoreFor += scoreFor;
     row.scoreAgainst += scoreAgainst;
     row.difference = row.scoreFor - row.scoreAgainst;
+    row.points += scoreFor;
     if (result === "win") {
       row.won += 1;
-      row.points += pointsForWin;
     } else if (result === "loss") {
       row.lost += 1;
     }
   }
 }
 
-export function calculatePlayerStats(players: Player[], rounds: Round[], pointsForWin: number): PlayerStats[] {
+export function calculatePlayerStats(players: Player[], rounds: Round[], _pointsForWin: number): PlayerStats[] {
   const stats = new Map(players.map((player) => [player.id, createEmptyStats(player.id)]));
 
   for (const round of rounds) {
@@ -51,8 +50,8 @@ export function calculatePlayerStats(players: Player[], rounds: Round[], pointsF
     for (const match of round.matches) {
       if (!isCompletedMatch(match)) continue;
 
-      applyTeamStats(stats, match.teamA, match.scoreA, match.scoreB, match.winner === "A" ? "win" : match.winner === "B" ? "loss" : "draw", pointsForWin);
-      applyTeamStats(stats, match.teamB, match.scoreB, match.scoreA, match.winner === "B" ? "win" : match.winner === "A" ? "loss" : "draw", pointsForWin);
+      applyTeamStats(stats, match.teamA, match.scoreA, match.scoreB, match.winner === "A" ? "win" : match.winner === "B" ? "loss" : "draw");
+      applyTeamStats(stats, match.teamB, match.scoreB, match.scoreA, match.winner === "B" ? "win" : match.winner === "A" ? "loss" : "draw");
     }
   }
 

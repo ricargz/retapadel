@@ -4,7 +4,6 @@ import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { HoldToConfirmButton } from "@/components/ui/hold-to-confirm-button";
 
 export const AlertDialog = AlertDialogPrimitive.Root;
 export const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
@@ -70,7 +69,11 @@ export function AlertDialogButtons({ onConfirm, confirmText = "Confirmar" }: { o
           Cancelar
         </Button>
       </AlertDialogCancel>
-      <HoldToConfirmButton idleText={`Mantén presionado para ${confirmText.toLowerCase()}`} holdingText="Suelta para cancelar" completeText={confirmText} onConfirm={onConfirm} />
+      <AlertDialogAction asChild>
+        <Button type="button" variant="destructive" onClick={onConfirm}>
+          {confirmText}
+        </Button>
+      </AlertDialogAction>
     </AlertDialogFooter>
   );
 }

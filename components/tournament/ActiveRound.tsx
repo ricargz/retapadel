@@ -7,16 +7,6 @@ import { calculatePlayerStats } from "@/core/tournament/statistics";
 import { MatchCourtCard } from "@/components/padel/MatchCourtCard";
 import { RestingPlayers } from "@/components/padel/RestingPlayers";
 import { Button } from "@/components/ui/button";
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { HoldToConfirmButton } from "@/components/ui/hold-to-confirm-button";
 
 interface ActiveRoundProps {
@@ -57,40 +47,18 @@ export function ActiveRound({ tournament, onSubmitScore, onNextRound, onFinish }
                 Generar siguiente ronda
                 <ArrowRight className="h-5 w-5" aria-hidden="true" />
               </Button>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button
-                    type="button"
-                    size="lg"
-                    variant="secondary"
-                    aria-label="Finalizar torneo"
-                    className="h-14 w-full border-primary/35 bg-primary/10 text-base font-black text-primary shadow-sm hover:bg-primary/15"
-                  >
-                    <Flag className="h-5 w-5" aria-hidden="true" />
-                    Finalizar torneo
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Finalizar torneo</AlertDialogTitle>
-                    <AlertDialogDescription>Se congelara la clasificacion final y pasaras al resumen del torneo.</AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel asChild>
-                      <Button type="button" variant="secondary">
-                        Cancelar
-                      </Button>
-                    </AlertDialogCancel>
-                    <HoldToConfirmButton
-                      idleText="Mantén presionado para finalizar"
-                      holdingText="Suelta para cancelar"
-                      completeText="Finalizando"
-                      variant="default"
-                      onConfirm={onFinish}
-                    />
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              <HoldToConfirmButton
+                idleText="Mantén para finalizar torneo"
+                holdingText="Finalizando torneo..."
+                completeText="Torneo finalizado"
+                variant="secondary"
+                aria-label="Mantén presionado para finalizar torneo"
+                className="h-14 w-full border-primary/40 bg-primary/10 text-base font-black text-primary shadow-sm ring-1 ring-primary/10 hover:bg-primary/15"
+                progressClassName="bg-primary/35 shadow-[inset_-18px_0_26px_rgb(var(--primary)_/_0.28)]"
+                onConfirm={onFinish}
+              >
+                <Flag className="relative z-10 h-5 w-5" aria-hidden="true" />
+              </HoldToConfirmButton>
             </div>
           </motion.div>
         ) : null}

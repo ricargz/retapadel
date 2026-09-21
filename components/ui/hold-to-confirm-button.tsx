@@ -12,6 +12,7 @@ interface HoldToConfirmButtonProps extends Omit<ButtonProps, "onClick"> {
   idleText: string;
   holdingText?: string;
   completeText?: string;
+  progressClassName?: string;
 }
 
 export function HoldToConfirmButton({
@@ -20,7 +21,9 @@ export function HoldToConfirmButton({
   idleText,
   holdingText = "Sigue presionando",
   completeText = "Listo",
+  progressClassName,
   className,
+  children,
   variant = "destructive",
   disabled,
   onPointerDown,
@@ -118,7 +121,20 @@ export function HoldToConfirmButton({
       }}
       {...props}
     >
-      <motion.span className="absolute inset-y-0 left-0 bg-white/22" style={{ width }} aria-hidden="true" />
+      <motion.span
+        className={cn("absolute inset-y-0 left-0 bg-white/35 shadow-[inset_-18px_0_24px_rgb(255_255_255_/_0.2)]", progressClassName)}
+        style={{ width }}
+        aria-hidden="true"
+      />
+      {state === "holding" ? (
+        <motion.span
+          className="absolute inset-y-0 left-0 w-1/4 bg-white/25 blur-md"
+          animate={{ x: ["-120%", "420%"] }}
+          transition={{ duration: 0.9, repeat: Infinity, ease: "easeInOut" }}
+          aria-hidden="true"
+        />
+      ) : null}
+      {children}
       <span className="relative z-10">{state === "complete" ? completeText : state === "holding" ? holdingText : idleText}</span>
     </Button>
   );
